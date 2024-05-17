@@ -109,17 +109,17 @@ public class MyArrayListTest {
 
             // TODO : Add an assert statement to verify the first parameter is of type int
             // Test that the first parameter is int
-            assertEquals(int.class, addIndexMethod.getParameterTypes()[0], "MyArrayList add method with index does not have int parameter");
+            assertEquals(int.class, addIndexMethod.getParameterTypes()[0], "Add method with index does not have int parameter");
 
             // TODO : Add an assert statement to verify the second parameter is Generic (see unit test for add method)
             // Test that the second parameter is generic type E
             Type[] genericParameterTypes = addIndexMethod.getGenericParameterTypes();
-            assertTrue(genericParameterTypes[1] instanceof TypeVariable, "MyArrayList add method with index does not have generic parameter");
+            assertTrue(genericParameterTypes[1] instanceof TypeVariable, "Add method with index does not have generic parameter");
 
 
             // TODO : Add an assert statement to verify the return type is void (see unit test for add method)
             // Test that the return type is void
-            assertEquals(void.class, addIndexMethod.getReturnType(), "MyArrayList add method with index does not have void return type");
+            assertEquals(void.class, addIndexMethod.getReturnType(), "The add method with index does not have void return type");
 
 
         } catch (NoSuchMethodException e) {
@@ -185,13 +185,16 @@ public class MyArrayListTest {
 
             // TODO : Add an assert statement that checks the return value of this method (boolean)
             // Test that the return type is boolean
-            assertEquals(boolean.class, removeObjMethod.getReturnType(), "MyArrayList remove object method has incorrect return type");
+            Class<?> returnType = removeObjMethod.getReturnType();
+            assertEquals(boolean.class, returnType,
+                    String.format("Expected return type of MyArrayList remove object method to be boolean, but found %s", returnType.getName()));
 
 
             // TODO : Add an assert statement that checks that the first parameter is generic type
             // Test that the parameter type is generic
             Type[] genericParameterTypes = removeObjMethod.getGenericParameterTypes();
-            assertTrue(genericParameterTypes[0] instanceof TypeVariable, "MyArrayList remove object method does not have generic parameter type");
+            assertTrue(genericParameterTypes[0] instanceof TypeVariable,
+                    "MyArrayList remove object method does not have generic parameter type.");
 
 
         } catch (NoSuchMethodException e) {
@@ -296,15 +299,17 @@ public class MyArrayListTest {
 
             // TODO : Test that the return value is correct
             // Test that that the return value is false
-            assertFalse(result, "The remove method should return false for element not present in the list");
+            assertFalse(result, "The remove method incorrectly returned true for an element not present in the list.");
 
 
             // TODO : Test that the ArrayList has not changed (size and element location)
             // Test that the ArrayList has not changed (size and element location)
-            assertEquals(arr.length, list.size, "MyArrayList size should remain unchanged");
+            assertEquals(arr.length, list.size, "The size of MyArrayList should remain unchanged after removing an element.");
             for (int i = 0; i < arr.length; i++) {
-                assertEquals(arr[i], list.get(i), "Element at index " + i + " should remain unchanged");
+                assertEquals(arr[i], list.get(i),
+                        "Element at index " + i + " should remain unchanged after removing an element.");
             }
+
 
         }
         catch (Exception e) {
@@ -370,7 +375,7 @@ public class MyArrayListTest {
             list.remove("w");
             list.remove("x");
             list.remove("y");
-            list.remove(2);
+            list.remove(1);
 
 
             // Verify that the array length decreases as expected
@@ -389,12 +394,11 @@ public class MyArrayListTest {
     public void testResetArrayLengthWhenSizeIsZero() {
         // Create a MyArrayList with some initial elements
         MyArrayList<String> list = new MyArrayList<>();
-        list.add("a");
-        list.add("b");
-        list.add("c");
+        list.add("m");
+        list.add("y");
+
 
         // Remove all elements from the list
-        list.remove(0);
         list.remove(0);
         list.remove(0);
 
@@ -461,7 +465,12 @@ public class MyArrayListTest {
         list.add("c");
 
         // Act & Assert: Attempt to remove an element with a negative index
-        assertThrows(IndexOutOfBoundsException.class, () -> list.remove(-1));
+        try {
+            list.remove(-1);
+            fail("Expected IndexOutOfBoundsException to be thrown for negative index.");
+        } catch (IndexOutOfBoundsException e) {
+            // Exception thrown as expected
+        }
     }
 
 
@@ -604,16 +613,16 @@ public class MyArrayListTest {
 		       Write a test case that intializes MyArrayList from an array, then modify one of them and verify the other has not changed. */
 
             // Modify the original array
-            data[1] = "modified";
+            data[2] = "modified";
 
             // Verify that the modification in the original array does not affect the list
-            assertEquals("y", list.get(1)); // Asserting that the element at index 1 in the list remains unchanged
+            assertEquals("z", list.get(2), "Element in MyArrayList should remain unchanged after modifying the original array.");
 
             // Modify the list
-            list.set(0, "updated");
+            list.set(1, "updated");
 
             // Verify that the modification in the list does not affect the original array
-            assertEquals("x", data[0]); // Asserting that the element at index 0 in the original array remains unchanged
+            assertEquals("y", data[1], "Element in original array should remain unchanged after modifying MyArrayList.");
 
         }
         catch (Exception e) {

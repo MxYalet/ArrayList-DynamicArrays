@@ -44,7 +44,8 @@ public class MyArrayList<E> {
         } else {
             size = arr.length;
             int newArrayLength = Math.max(arr.length, INITIAL_CAPACITY);
-            data = Arrays.copyOf(arr, newArrayLength);
+            data = new Object[newArrayLength];
+            System.arraycopy(arr, 0, data, 0, arr.length);
         }
     }
 
@@ -114,12 +115,12 @@ public class MyArrayList<E> {
         for (int i = 0; i < size; i++) {
             if (obj.equals(data[i])) {
 
-                // Shift elements to the left to fill the empty space
+                // Adjust elements to fill the empty space
                 for (int j = i; j < size - 1; j++) {
                     data[j] = data[j + 1];
                 }
                 data[size - 1] = null;
-                size--; // Decrease size
+                size--;
 
                 // Check if array needs to be shrunk
                 if (size <= 0.25 * data.length && data.length > INITIAL_CAPACITY) {
@@ -134,10 +135,9 @@ public class MyArrayList<E> {
     private void shrinkCapacity() {
         // Ensure the capacity doesn't go below the initial capacity
         int newCapacity = Math.max(INITIAL_CAPACITY, data.length / 2);
-        Object[] newData = new Object[newCapacity];
-        System.arraycopy(data, 0, newData, 0, size);
-        data = newData;
+        data = Arrays.copyOf(data, newCapacity);
     }
+
 
 
 
