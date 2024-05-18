@@ -30,6 +30,7 @@ public class MyArrayList<E> {
     protected Object[] data;
     protected int size = 0;
 
+
     public MyArrayList() {
         data = new Object[INITIAL_CAPACITY];
     }
