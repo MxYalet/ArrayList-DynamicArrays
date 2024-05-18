@@ -148,6 +148,8 @@ public class MyArrayList<E> {
     }
 
     public boolean contains(E obj) {
+
+
         for (int i = 0; i < size; i++) {
             if (Objects.equals(data[i], obj))
                 return true;
