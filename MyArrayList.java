@@ -50,7 +50,6 @@ public class MyArrayList<E> {
         }
     }
 
-
     public E get(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
@@ -181,6 +180,4 @@ public class MyArrayList<E> {
         }
         return -1;
     }
-
-
 }
