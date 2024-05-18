@@ -479,6 +479,7 @@ public class MyArrayListTest {
      * Step 5 - Test indexOf method
      */
 
+
     // Test that the indexOf method returns correct value when element does exist in list
     @Test
     @Timeout(value = 10)
